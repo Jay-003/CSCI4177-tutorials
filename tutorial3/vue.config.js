@@ -1,6 +1,4 @@
-module.exports = {
-  transpileDependencies: [
-    'vue-echarts',
-    'resize-detector'
-  ]
-};
+const { defineConfig } = require( '@vue/cli-service' )
+module.exports = defineConfig( {
+  transpileDependencies: true
+} )
