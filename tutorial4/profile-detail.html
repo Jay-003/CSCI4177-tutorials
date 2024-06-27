@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Detail</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .profile-card {
+        margin-top: 20px;
+      }
+      .profile-card img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+      }
+      .profile-info {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="my-4">Profile Detail</h1>
+      <div id="profile-detail" class="card profile-card">
+        <div class="card-body">Loading...</div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let params = new URLSearchParams(window.location.search)
+        let userId = params.get("id")
+
+        if (userId) {
+          fetch(`https://express-t4.onrender.com/api/users/${userId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok")
+              }
+              return response.json()
+            })
+            .then((userData) => {
+              displayProfile(userData)
+            })
+            .catch((error) => {
+              console.error("Error fetching profile:", error)
+              document.getElementById("profile-detail").innerHTML =
+                '<div class="card-body">Failed to load profile.</div>'
+            })
+        } else {
+          document.getElementById("profile-detail").innerHTML =
+            '<div class="card-body">User ID not provided.</div>'
+        }
+
+        function displayProfile(userData) {
+          let profileDetail = document.getElementById("profile-detail")
+          profileDetail.innerHTML = `
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img src="${userData.picture}" alt="${userData.name}" class="img-fluid rounded-circle">
+                            </div>
+                            <div class="col-md-8 profile-info">
+                                <h2>${userData.name}</h2>
+                                <p><strong>Email:</strong> ${userData.email}</p>
+                                <p><strong>Phone:</strong> ${userData.phone}</p>
+                                <p><strong>Company:</strong> ${userData.company}</p>
+                                <p><strong>Address:</strong> ${userData.address}</p>
+                                <p><strong>About:</strong> ${userData.about}</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+        }
+      })
+    </script>
+  </body>
+</html>

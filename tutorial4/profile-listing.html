@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Listing</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <style>
+      .user-card {
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+      .user-card img {
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="my-4">Profile Listing</h1>
+      <input
+        type="text"
+        id="search"
+        class="form-control mb-4"
+        placeholder="Search by First or Last Name"
+      />
+      <div
+        id="user-list"
+        class="row"
+        hx-get="https://express-t4.onrender.com/api/users"
+        hx-trigger="load"
+        hx-target="#user-list"
+        hx-swap="innerHTML"
+      ></div>
+    </div>
+    <script>
+      document.getElementById("search").addEventListener("input", function () {
+        let filter = this.value.toLowerCase()
+        let users = document.querySelectorAll(".user-card")
+        users.forEach((user) => {
+          let name = user.querySelector(".name").textContent.toLowerCase()
+          if (name.includes(filter)) {
+            user.style.display = ""
+          } else {
+            user.style.display = "none"
+          }
+        })
+      })
+
+      document.addEventListener("htmx:afterOnLoad", function (event) {
+        let data = JSON.parse(event.detail.xhr.responseText)
+        let userCards = data
+          .map((user) => {
+            return `
+              <div class="col-md-3">
+                <a href="profile-detail.html?id=${user._id}" class="card user-card" hx-get="profile-detail.html?id=${user._id}" hx-target="body">
+                  <img src="${user.picture}" class="card-img-top" alt="${user.name}" />
+                  <div class="card-body">
+                    <h5 class="card-title name">${user.name}</h5>
+                    <p class="card-text">Email: ${user.email}</p>
+                    <p class="card-text">Phone: ${user.phone}</p>
+                    <p class="card-text">Company: ${user.company}</p>
+                  </div>
+                </a>
+              </div>
+            `
+          })
+          .join("")
+        document.getElementById("user-list").innerHTML = userCards
+      })
+    </script>
+  </body>
+</html>

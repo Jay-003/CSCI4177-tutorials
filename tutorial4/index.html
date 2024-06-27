@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form
+      id="login-form"
+      hx-post="https://express-t4.onrender.com/api/login"
+      hx-include="[name=username],[name=password]"
+      hx-target="#login-result"
+      hx-swap="outerHTML"
+    >
+      <label for="username">Username:</label>
+      <input type="email" id="username" name="username" required /><br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required /><br />
+      <button type="submit">Login</button>
+    </form>
+    <div id="login-result"></div>
+    <script>
+      document
+        .getElementById("login-form")
+        .addEventListener("htmx:afterRequest", function (event) {
+          if (event.detail.xhr.status === 200) {
+            window.location.href = "profile-listing.html"
+          } else {
+            document.getElementById("login-result").innerHTML = "Login failed"
+          }
+        })
+    </script>
+  </body>
+</html>

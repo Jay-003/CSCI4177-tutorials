@@ -3,11 +3,11 @@
 
 # Tutorial 2
 
-* *Date Created*: 04 JUNE 2024
-* *Last Modification Date*: 06 JUNE 2024
-* *Lab URL*: <https://git.cs.dal.ca/jmodi/csci-4177-tutorials/-/tree/main/tutorial3?ref_type=heads>
-* *Git URL*: <hhttps://github.com/Jay-003/CSCI4177-tutorials/tree/main/tutorial3>
-* *Netlify URL*: <https://csci4177-tutorial-3.netlify.app>
+* *Date Created*: 27 JUNE 2024
+* *Last Modification Date*: 27 JUNE 2024
+* *Lab URL*: <https://git.cs.dal.ca/jmodi/csci-4177-tutorials/-/tree/main/tutorial4?ref_type=heads>
+* *Git URL*: <hhttps://github.com/Jay-003/CSCI4177-tutorials/tree/main/tutorial4>
+* *Netlify URL*: <https://csci4177-tutorial-4.netlify.app>
 Group Links
 
 * *Group Github URL*: <https://github.com/Jay-003/CSCI4177>
